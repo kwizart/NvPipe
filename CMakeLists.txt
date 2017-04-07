@@ -30,7 +30,7 @@ set(NVPIPE "nvpipe")
 project(${NVPIPE})
 
 # Configuration
-set(config_install_dir "lib/cmake/${PROJECT_NAME}")
+set(config_install_dir "lib${LIB_SUFFIX}/cmake/${PROJECT_NAME}")
 set(include_install_dir "include")
 set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
@@ -43,7 +43,7 @@ list(APPEND CUDA_NVCC_FLAGS "--std c++11")
 
 include_directories(${CMAKE_SOURCE_DIR} ${CUDA_SDK_ROOT_DIR}/common/inc)
 link_directories("${CUDA_TOOLKIT_ROOT_DIR}/lib64")
-link_directories("${CMAKE_INSTALL_PREFIX}/lib")
+link_directories("${LIB_INSTALL_DIR}")
 
 cuda_compile_ptx(ptxprograms
 	convert.cu
@@ -123,7 +123,7 @@ configure_file(
 )
 
 install(FILES nvpipe.h DESTINATION include)
-install(TARGETS ${NVPIPE} DESTINATION lib)
-install(FILES "${project_config}" DESTINATION lib/cmake/${NVPIPE})
+install(TARGETS ${NVPIPE} DESTINATION lib${LIB_SUFFIX})
+install(FILES "${project_config}" DESTINATION lib${LIB_SUFFIX}/cmake/${NVPIPE})
 install(FILES ${PROJECT_BINARY_DIR}/convert.ptx DESTINATION share/nvpipe)
 install(FILES ${PROJECT_BINARY_DIR}/config.nvp.h DESTINATION include)
